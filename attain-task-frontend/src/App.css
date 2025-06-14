@@ -108,3 +108,7 @@ button:hover {
   grid-column: span 1;
   padding-left: 40px;
 }
+
+p{
+  color: black;
+}
