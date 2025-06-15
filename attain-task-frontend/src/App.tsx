@@ -13,7 +13,7 @@ type Transaction = {
   deleted?: boolean;
 };
 
-const API = 'http://localhost:3000/transactions';
+const URL = 'http://localhost:3000/transactions';
 
 function App() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -60,7 +60,7 @@ function App() {
     //   userId: loggedInUser.userId,
     // });
     // fetchTransactions(loggedInUser);
-    const res = await axios.post(API, { ...form, userId: loggedInUser.userId });
+    const res = await axios.post(URL, { ...form, userId: loggedInUser.userId });
     setTransactions([...transactions, res.data]);
 
     setForm({ userId: '', payee: '', amount: 0, category: '', date: '' });
@@ -70,9 +70,9 @@ function App() {
   const updateTransaction = async () => {
     if (!editingId) return;
   
-    // await axios.put(`${API}/${editingId}`, form);
+    // await axios.put(`${URL}/${editingId}`, form);
     // fetchTransactions(loggedInUser);
-    await axios.put(`${API}/${editingId}`, form);
+    await axios.put(`${URL}/${editingId}`, form);
     setTransactions((prev) =>
       prev.map((tx) => (tx.id === editingId ? { ...tx, ...form } : tx))
     );
@@ -83,7 +83,7 @@ function App() {
   
 
   const deleteTransaction = async (id: string) => {
-    await axios.delete(`${API}/${id}`);
+    await axios.delete(`${URL}/${id}`);
     setTransactions((prev) => prev.filter((tx) => tx.id !== id));
 
   };
@@ -140,6 +140,7 @@ function App() {
           />
           <input
             type="date"
+            max="2999-12-31"
             value={form.date}
             onChange={(e) => setForm({ ...form, date: e.target.value })}
           />
